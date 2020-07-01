@@ -7,26 +7,67 @@
     </head>
 
     <body>
-        <div id="container">
-
+        <button id="reset">Reset the Grid</button>
+        <button id="create">Create New Grid</button>
+        <input id="gridSize" type="number" min="1" max="50" value="16" />
+        <div id="container" >
+            
         </div>
     </body>
 
     <script>
-        const container = document.querySelector('#container')
+        const container = document.querySelector('#container');
+        const button = document.querySelector('#reset');
+        const create = document.querySelector('#gridSize');
+        
+        var gridSize = create.getAttribute('value');
+
+        var divSize = container.clientWidth / gridSize;
+        const divDimension = `${divSize}px`;
+
+        
         const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
         const columns = ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12', '13', '14', '15', '16'];
+
+        for(let i = 0; i < columns.length; i++){
+            for(let j=0; j< rows.length; j++){
+                generateDiv()
+            }
+        }
 
         function generateDiv() {
             const div = document.createElement('div')
 
-            div.style.width = '50px'
-            div.style.height = '50px'
+            div.style.width = `${divDimension}`
+            div.style.height = `${divDimension}`
             div.style.border = '1px solid black'
 
             container.appendChild(div)
         }
 
+        const div = [...document.querySelectorAll('#container > div')]
+        
+        function changeBackgroundColor(e){
+            e.addEventListener('mouseover', () => {
+                e.classList.toggle('change-color')
+            })
+        }
+
+        div.forEach(element => {
+           changeBackgroundColor(element)
+        })
+
+        button.addEventListener('click', (e) => {
+            div.forEach(e => {
+                e.classList.remove('change-color')
+            })
+        })
+    
+        function resetGrid(){
+      
+            return prompt('Enter New Grid Size');
+        }
+        
     </script>
 
 </html>
